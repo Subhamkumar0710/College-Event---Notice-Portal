@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block title %}
+Admin Dashboard - College Events & Notice Portal
+{% endblock %}
+{% block content %}
+<div class="max-w-6xl mx-auto mt-10">
+    <h1 class="text-3xl font-extrabold text-blue-700 text-center mb-10 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-user-shield text-blue-500"></i>
+        Admin Dashboard
+    </h1>
+
+
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold text-blue-700 flex items-center gap-2">
+            <i class="fa-solid fa-calendar-days text-blue-400"></i>
+            Events
+        </h2>
+        <a class="px-4 py-2 rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 shadow flex items-center gap-2 transition"
+            href="{{ url_for('add_event' ) }}">
+            <i class="fas fa-plus fa-xs"></i>
+            Add
+        </a>
+    </div>
+    <div class="overflow-x-auto rounded-2xl shadow mb-10">
+        <table class="min-w-full bg-white text-sm rounded-2xl">
+            <thead class="bg-blue-100 text-blue-700">
+                <tr>
+                    <th class="py-3 px-4 text-left">Event Id</th>
+                    <th class="py-3 px-4 text-left">Title</th>
+                    <th class="py-3 px-4 text-left">Description</th>
+                    <th class="py-3 px-4 text-left">Department</th>
+                    <th class="py-3 px-4 text-left">Start Date</th>
+                    <th class="py-3 px-4 text-left">Venue</th>
+                    <th class="py-3 px-4 text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr class="border-b hover:bg-blue-50">
+                    <td class="py-2 px-4">{{event.id}}</td>
+                    <td class="py-2 px-4 font-semibold">{{event.title}}</td>
+                    <td class="py-2 px-4">{{event.description}}</td>
+                    <td class="py-2 px-4">{{event.department}}</td>
+                    <td class="py-2 px-4">{{event.start_date.strftime('%Y-%m-%d') if event.start_date else ''}}</td>
+                    <td class="py-2 px-4">{{event.location}}</td>
+                    <td class="py-2 px-4 flex gap-2">
+                        <a class="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1 transition"
+                            href="/event/edit/{{event.id}}">
+                            <i class="fas fa-edit fa-xs"></i> Edit
+                        </a>
+                        <a class="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700 flex items-center gap-1 transition"
+                            href="/event/delete/{{event.id}}">
+                            <i class="fas fa-trash fa-xs"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="flex items-center justify-between mb-4 mt-12">
+        <h2 class="text-xl font-bold text-pink-700 flex items-center gap-2">
+            <i class="fa-solid fa-bell text-pink-400"></i>
+            Notices
+        </h2>
+        <a class="px-4 py-2 rounded-lg bg-green-600 text-white font-bold hover:bg-green-700 shadow flex items-center gap-2 transition"
+            href="{{ url_for('add_notice' ) }}">
+            <i class="fas fa-plus fa-xs"></i>
+            Add
+        </a>
+    </div>
+    <div class="overflow-x-auto rounded-2xl shadow">
+        <table class="min-w-full bg-white text-sm rounded-2xl">
+            <thead class="bg-pink-100 text-pink-700">
+                <tr>
+                    <th class="py-3 px-4 text-left">Notice Id</th>
+                    <th class="py-3 px-4 text-left">Title</th>
+                    <th class="py-3 px-4 text-left">Content</th>
+                    <th class="py-3 px-4 text-left">Department</th>
+                    <th class="py-3 px-4 text-left">Posted_at</th>
+                    <th class="py-3 px-4 text-left">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notice in notices %}
+                <tr class="border-b hover:bg-pink-50">
+                    <td class="py-2 px-4">{{notice.id}}</td>
+                    <td class="py-2 px-4 font-semibold">{{notice.title}}</td>
+                    <td class="py-2 px-4">{{notice.content}}</td>
+                    <td class="py-2 px-4">{{notice.department}}</td>
+                    <td class="py-2 px-4">{{ notice.posted_at.strftime('%Y-%m-%d') if notice.posted_at else '' }}</td>
+                    <td class="py-2 px-4 flex gap-2">
+                        <a class="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-1 transition"
+                            href="{{url_for('edit_notice', id=notice.id)}}">
+                            <i class="fas fa-edit fa-xs"></i> Edit
+                        </a>
+                        <a class="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700 flex items-center gap-1 transition"
+                            href="/notice/delete/{{notice.id}}">
+                            <i class="fas fa-trash fa-xs"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

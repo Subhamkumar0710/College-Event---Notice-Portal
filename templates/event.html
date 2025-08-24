@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% block title %}
+Notice - College Event & Notice Portal
+{% endblock %}
+{% block content %}
+<div class="events-section">
+    <div class="section-title"> Events</div>
+    {% if events %}
+    {% for event in events %}
+    <div class="event">
+        <div class="event-title">{{ event.title }}</div>
+        <div class="event-description">{{ event.description }}</div>
+        <div class="event-department">{{ event.department }}</div>
+        <div class="event-date">{{ event.start_date.strftime('%Y-%m-%d') if event.start_date else '' }}</div>
+        <div class="event-venue">{{ event.location }}</div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No upcoming events.</p>
+    {% endif %}
+</div>
+
+{% endblock%}
+{% block style %}
+<style>
+    .events-section {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+
+    .events-section .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        border-left: 6px solid #2196f3;
+        padding-left: 10px;
+        color: #2196f3;
+        font-weight: 600;
+    }
+
+
+    .event {
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        background: #e3f2fd;
+        border: 1px solid #bbdefb;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+
+    .event:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 15px rgba(33, 150, 243, 0.25);
+    }
+
+
+    .event-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #0d47a1;
+        margin-bottom: 8px;
+    }
+
+    .event-description {
+        font-size: 1rem;
+        color: #444;
+        margin-bottom: 6px;
+    }
+
+
+    .event-department {
+        font-size: 0.95rem;
+        font-style: italic;
+        color: #555;
+        margin-bottom: 6px;
+    }
+
+
+    .event-date {
+        font-size: 0.9rem;
+        color: #0277bd;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
+
+
+    .event-venue {
+        font-size: 0.9rem;
+        color: #666;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,50 @@
+<nav class="w-full bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 shadow-lg rounded-b-2xl">
+    <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-20">
+        <a href="/" class="flex items-center gap-3 text-white font-extrabold text-2xl tracking-tight drop-shadow-lg">
+            <i class="fa-solid fa-graduation-cap text-3xl"></i>
+            <span class="hidden sm:inline">College Event Portal</span>
+        </a>
+
+        {# Show search bar in navbar for students (not admin) #}
+        {% if user and not user.is_admin %}
+        <div class="hidden md:block ml-8 w-80">
+            {% include 'searchbar.html' %}
+        </div>
+        {% endif %}
+
+        <input id="nav-toggle" type="checkbox" class="hidden peer">
+        <label for="nav-toggle" class="md:hidden cursor-pointer p-2 rounded hover:bg-blue-800">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
+            </svg>
+        </label>
+        <ul
+            class="flex-col md:flex-row md:flex gap-2 md:gap-6 items-center font-semibold text-white bg-blue-700 md:bg-transparent absolute md:static left-0 right-0 top-20 md:top-0 shadow md:shadow-none p-4 md:p-0 z-20 hidden peer-checked:flex rounded-b-2xl md:rounded-none">
+            {% if user %}
+            <li>
+                <a href="{{url_for('profile')}}" class="hover:text-yellow-300 transition">Profile</a>
+            </li>
+            {% if not user.is_admin %}
+            <li>
+                <a href="{{url_for('event')}}" class="hover:text-yellow-300 transition">Events</a>
+            </li>
+            <li>
+                <a href="{{url_for('notice')}}" class="hover:text-yellow-300 transition">Notices</a>
+            </li>
+            <li>
+                <a href="{{url_for('logout')}}" class="hover:text-yellow-300 transition">Logout</a>
+            </li>
+            {% endif %}
+            {% else %}
+            <li>
+                <a href="{{url_for('login')}}" class="hover:text-yellow-300 transition">Login</a>
+            </li>
+            <li>
+                <a href="{{url_for('register')}}" class="hover:text-yellow-300 transition">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
